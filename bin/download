@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
+
+# shellcheck source=lib/utils.bash
+. "${plugin_dir}/lib/utils.bash"
+
+mkdir -p "$ASDF_DOWNLOAD_PATH"
+
+dojo_script_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-dojoup_install.sh"
+
+# Download dojo installation script file to the download directory
+download_dojo_up "$dojo_script_file"
+
+# Install dojoup
+bash "$dojo_script_file"
+
+# Cleanup
+rm -f "$dojo_script_file"
